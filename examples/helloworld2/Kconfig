@@ -1,0 +1,7 @@
+mainmenu "SDK Configuration"
+
+config SDK_BASE
+    string
+    option env="SDK_BASE"
+
+source "$SDK_BASE/Kconfig"

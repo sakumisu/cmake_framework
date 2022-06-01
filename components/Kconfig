@@ -1,0 +1,7 @@
+menu "SDK Components"
+
+source "$SDK_BASE/components/component1/Kconfig"
+source "$SDK_BASE/components/component2/Kconfig"
+source "$SDK_BASE/components/component3/Kconfig"
+
+endmenu

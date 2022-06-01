@@ -1,0 +1,5 @@
+message("components")
+
+sdk_add_subdirectory_ifdef(CONFIG_COMPONENT1 component1)
+sdk_add_subdirectory_ifdef(CONFIG_COMPONENT2 component2)
+sdk_add_subdirectory_ifdef(CONFIG_COMPONENT3 component3)
