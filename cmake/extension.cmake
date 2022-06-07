@@ -66,6 +66,16 @@ function(sdk_add_compile_options_ifdef feature)
   endif()
 endfunction()
 
+function(sdk_add_link_options)
+  target_link_options(sdk_intf_lib INTERFACE ${ARGV})
+endfunction()
+
+function(sdk_add_link_options_ifdef feature)
+  if(${${feature}})
+  sdk_add_link_options(${ARGN})
+  endif()
+endfunction()
+
 function(sdk_add_link_libraries)
   target_link_libraries(sdk_intf_lib INTERFACE ${ARGV})
 endfunction()
@@ -82,26 +92,34 @@ function(sdk_add_subdirectory_ifdef feature dir)
   endif()
 endfunction()
 
+function(sdk_set_linker_script ld)
+  if(IS_ABSOLUTE ${ld})
+  set(path ${ld})
+  else()
+  set(path ${CMAKE_CURRENT_SOURCE_DIR}/${ld})
+  endif()
+  set_property(GLOBAL PROPERTY LINKER_SCRIPT ${path})
+endfunction()
 
 macro(project name)
 
   _project(${name} ASM C CXX)
 
-  set(HEX_FILE ${__build_dir}/${name}.hex)
-  set(BIN_FILE ${__build_dir}/${name}.bin)
-  set(MAP_FILE ${__build_dir}/${name}.map)
-  set(ASM_FILE ${__build_dir}/${name}.asm)
+  set(HEX_FILE ${build_dir}/${name}.hex)
+  set(BIN_FILE ${build_dir}/${name}.bin)
+  set(MAP_FILE ${build_dir}/${name}.map)
+  set(ASM_FILE ${build_dir}/${name}.asm)
 
   add_executable(${name}.elf ${SDK_BASE}/misc/empty_file.c)
-  target_link_libraries(${name}.elf sdk_intf_lib app)
-  # set_target_properties(${name}.elf PROPERTIES LINK_FLAGS "-T${LINKER_SCRIPT} -Wl,-Map=${MAP_FILE}")
-  # set_target_properties(${name}.elf PROPERTIES LINK_DEPENDS ${LINKER_SCRIPT})
-
-  set_target_properties(${name}.elf PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${__build_dir}")
+  target_link_libraries(${name}.elf sdk_intf_lib)
+  get_property(LINKER_SCRIPT_PROPERTY GLOBAL PROPERTY LINKER_SCRIPT)
+  if(EXISTS ${LINKER_SCRIPT_PROPERTY})
+    set_target_properties(${name}.elf PROPERTIES LINK_FLAGS "-T${LINKER_SCRIPT_PROPERTY} -Wl,-Map=${MAP_FILE}")
+    set_target_properties(${name}.elf PROPERTIES LINK_DEPENDS ${LINKER_SCRIPT_PROPERTY})
+  endif()
 
   get_property(SDK_LIBS_PROPERTY GLOBAL PROPERTY SDK_LIBS)
-
-  target_link_libraries(${name}.elf ${SDK_LIBS_PROPERTY})
+  target_link_libraries(${name}.elf -Wl,--start-group ${SDK_LIBS_PROPERTY} app -Wl,--end-group)
 
   add_custom_command(TARGET ${name}.elf POST_BUILD
   COMMAND ${CMAKE_OBJCOPY} -Obinary $<TARGET_FILE:${name}.elf> ${BIN_FILE}

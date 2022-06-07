@@ -5,7 +5,7 @@
 #include "uart.h"
 #include "spi.h"
 
-void main(void)
+int main(void)
 {
     board_init();
     component1_init();

@@ -7,6 +7,7 @@ message("examples/helloworld start")
 
 find_package(xxx_sdk REQUIRED HINTS $ENV{SDK_BASE})
 
+# sdk_set_linker_script(template.ld)
 target_sources(app PRIVATE main.c)
 
 project(helloworld)

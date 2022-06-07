@@ -4,7 +4,7 @@
 #include "component3.h"
 #include "uart.h"
 
-void main(void)
+int main(void)
 {
     board_init();
     component1_init();
