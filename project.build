@@ -1,0 +1,11 @@
+build:Makefile
+	cmake -S . -B build -G "Unix Makefiles" $(cmake_definition)
+	cd build && make -j4
+
+clean:
+	$(RM) build
+
+menuconfig:
+	python ../../tools/kconfig/menuconfig.py
+
+.PHONY:build clean menuconfig
