@@ -1,3 +1,6 @@
+# The command to remove a file.
+RM = cmake -E remove_directory
+
 build:Makefile
 	cmake -S . -B build -G "Unix Makefiles" $(cmake_definition)
 	cd build && make -j4
