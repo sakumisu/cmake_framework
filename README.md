@@ -2,20 +2,18 @@
 
 [中文版](README_zh.md)
 
-This is a CMake framework for those who want to use GCC for command line compilation,especially for embedded field.The CMake framework building style is basically the current mainstream approach, such as Zephyr,esp-idf : only one project is built at a time (this framework supports multi-project compilation) and links with **library + interface library + app library**.Apart from this, use **kconfig** to modify some compile configurations.
+This is a CMake framework for GCC compilation.
 
 ## Support features
 
 - Single project compilation
-- Single project compilation at the same time
+- Multi projects compilation at the same time
 - Support menuconfig
 - Support compile project in everywhere
 - Support x86、arm、risc-v GCC toolchain
 - Support all platform ：windows、linux、macOS
 
 ## Compile demo
-
-- Execute `source env.sh` in sdk root path
 
 - Compile two demos separately
 

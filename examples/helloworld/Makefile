@@ -1,4 +1,4 @@
-SDK_DEMO_PATH = $(shell pwd)
+SDK_DEMO_PATH = .
 
 SDK_BASE ?= ${SDK_DEMO_PATH}/../..
 
