@@ -19,5 +19,6 @@ clean:
 
 menuconfig:
 	python ../../tools/kconfig/menuconfig.py
+	python ../../tools/kconfig/genconfig.py
 
 .PHONY:build clean menuconfig ninja
