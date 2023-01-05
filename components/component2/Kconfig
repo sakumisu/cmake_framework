@@ -1,10 +1,10 @@
-menuconfig CONFIG_COMPONENT2
+menuconfig COMPONENT2
     bool "component3"
     default y
 
-if CONFIG_COMPONENT2
+if COMPONENT2
 
-    config CONFIG_XXX2
+    config XXX2
         bool
         default y
 
