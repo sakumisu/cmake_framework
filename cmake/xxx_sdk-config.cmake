@@ -2,6 +2,16 @@ if(NOT DEFINED ENV{SDK_BASE})
     message(FATAL_ERROR "please set SDK_BASE in your system environment")
 endif()
 
+if(MINGW OR CYGWIN OR WIN32)
+SET(CMAKE_SYSTEM_NAME Generic)
+elseif(UNIX)
+SET(CMAKE_SYSTEM_NAME Linux)
+elseif(APPLE)
+SET(CMAKE_SYSTEM_NAME Darwin)
+endif()
+SET(CMAKE_SYSTEM_VERSION 1)
+set(CMAKE_SYSTEM_PROCESSOR RISCV)
+
 set(SDK_BASE $ENV{SDK_BASE})
 
 set(build_dir ${CMAKE_CURRENT_BINARY_DIR}/build_out)
